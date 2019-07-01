@@ -5,7 +5,7 @@ from datascience import *
 import numpy as np
 
 # access the csv file
-picks_data = Table.read_table("second_rounders_2004-14.csv")
+picks_data = Table.read_table("second_rounders_2005-14.csv")
 
 # General analysis
 avg_yrs = round(np.mean(picks_data.column('Yrs')))
