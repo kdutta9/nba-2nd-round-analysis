@@ -16,7 +16,7 @@ draft_df = pd.DataFrame()
 second_round_numbers = list(range(31,61))
 second_round_numbers = [str(x) for x in second_round_numbers]
 
-for year in range(2004, 2015): 
+for year in range(2005, 2015):
     # insert year into url to scrape by year
     url = base_url.format(year=year)
     
@@ -88,5 +88,5 @@ draft_df.columns.values[15:19] = [draft_df.columns.values[15:19][col] +
 draft_df.infer_objects()
 
 # uncomment to download the csv file
-# draft_df.to_csv("second_rounders_2004-14.csv")
+# draft_df.to_csv("second_rounders_2005-14.csv")
 
