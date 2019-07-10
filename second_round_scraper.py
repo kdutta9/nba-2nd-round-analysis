@@ -6,29 +6,32 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 
-# url that we are scraping
+# url template for scraping
 base_url = "http://www.basketball-reference.com/draft/NBA_{year}.html"
 
 # initialize large DataFrame to append individual draft classes into
 draft_df = pd.DataFrame()
 
-# create a list of strings that indicate second-round status
-second_round_numbers = list(range(31,61))
-second_round_numbers = [str(x) for x in second_round_numbers]
+# create a list of strings that indicate second round pick
+pick_range = list(range(31,61))
+pick_range = [str(x) for x in pick_range]
 
+# append individual draft classes into DataFrame
 for year in range(2005, 2015):
     # insert year into url to scrape by year
     url = base_url.format(year=year)
-    
+
     # get the html for the url we use and create the soup object to parse the html
     html = urlopen(url) 
-    soup = BeautifulSoup(html, 'html5lib') 
-    
-    # parse for the headers to have our DataFrame labels
+    soup = BeautifulSoup(html, 'html5lib')
+
+    # parse through <tr> tag in html for the headers to have our DataFrame labels
     column_headers = [th.getText() for th in soup.findAll('tr', limit=2)[1].findAll('th')]
-    column_headers.remove('Rk') # Rk does not get caught by player data
-    
-    # get our player data
+
+    # Rk does not get caught by player_data, so remove it for consistency
+    column_headers.remove('Rk')
+
+    # get our player data from <td> tag in html
     data_rows = soup.findAll('tr')[2:] 
     player_data = [[td.getText() for td in data_rows[i].findAll('td')] for i in range(len(data_rows))]
     
@@ -52,18 +55,18 @@ for year in range(2005, 2015):
         counter = counter + 1
     
     # only access 2nd rounders
-    player_data = [x for x in player_data if x[0] in second_round_numbers]
+    player_data = [x for x in player_data if x[0] in pick_range]
         
     # insert data into pandas DataFrame
     year_df = pd.DataFrame(player_data, columns=column_headers)
-    
-    # separate draft classes by inserting new column
+
+    # make draft classes distinct by inserting new column into DataFrame
     year_df.insert(0, 'Draft Year', year)
-    
-    # Append to the big dataframe
+
+    # Append to the original DataFrame
     draft_df = draft_df.append(year_df, ignore_index=True)
-    
-    # sleep in order to not overload servers and get blacklisted
+
+    # Pause program in order to not overload servers and get blacklisted
     time.sleep(45)
 
 # Convert data to proper data types (strings to int/float)
@@ -76,7 +79,7 @@ draft_df = draft_df[draft_df.Player.notnull()]
 draft_df = draft_df.fillna(0)
 
 # Rename Columns
-draft_df.rename(columns={'WS/48':'WS_per_48'}, inplace=True)
+draft_df.rename(columns={'WS/48': 'WS_per_48'}, inplace=True)
 
 # Change % symbol
 draft_df.columns = draft_df.columns.str.replace('%', '_Perc')
@@ -87,6 +90,6 @@ draft_df.columns.values[15:19] = [draft_df.columns.values[15:19][col] +
 
 draft_df.infer_objects()
 
-# uncomment to download the csv file
-# draft_df.to_csv("second_rounders_2005-14.csv")
+# download the csv file
+draft_df.to_csv("second_rounders_2005-14.csv")
 
