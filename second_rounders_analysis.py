@@ -22,3 +22,21 @@ for i in range(2005, 2015):
     year_data = picks_data.where("Draft Year", are.equal_to(i))
     draftyr_yrs = round(np.mean(year_data.column('G')))
     print(str(i) + " draftees played an average of " + str(draftyr_yrs) + " games in their career.")
+
+# Output
+'''
+The average second rounder will have a 3.0 year career.
+The average second rounder will play 152.0 games in their career.
+The average second rounder score 3.6 points per game in their career.
+The average second rounder brings 1.3 value over replacement player (VORP) throughout their career.
+2005 draftees played an average of 285.0 games in their career.
+2006 draftees played an average of 150.0 games in their career.
+2007 draftees played an average of 135.0 games in their career.
+2008 draftees played an average of 163.0 games in their career.
+2009 draftees played an average of 211.0 games in their career.
+2010 draftees played an average of 70.0 games in their career.
+2011 draftees played an average of 150.0 games in their career.
+2012 draftees played an average of 162.0 games in their career.
+2013 draftees played an average of 89.0 games in their career.
+2014 draftees played an average of 102.0 games in their career.
+'''
