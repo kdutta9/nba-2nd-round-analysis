@@ -6,12 +6,12 @@ This project analyzed the careers of second round picks, drafted from 2005-2014.
 ## Tools Used
 * Language: Python
 
-I used [Jupyter Notebook](https://jupyter.org/ "Jupyter Notebook") to write the programs, making it easier to see the data I was using. 
+* I used [Jupyter Notebook](https://jupyter.org/ "Jupyter Notebook") to write the programs, making it easier to see the data I was using. 
 
 * Python Packages: urllib, bs4, pandas, datascience, numpy, statistics, matplotlib, seaborn, sklearn
 
 ## Gathering Data
-To access the [data](../blob/master/second_round_scraper.ipynb), I web-scraped [Basketball Reference](https://www.basketball-reference.com/ "Basketball Reference"). 
+To access the [data](second_round_scraper.ipynb), I web-scraped [Basketball Reference](https://www.basketball-reference.com/ "Basketball Reference"). 
 
 I used the draft archives from 2005 through 2014, and filtered the data to only access second-round picks and converted it to a [csv file](../second_rounders_2005-14.csv).
 
